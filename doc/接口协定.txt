@@ -1,0 +1,109 @@
+注册http：
+loginName
+password
+nickname
+devCode
+res:
+{loginName:"aaa"}
+
+普通登录http/自动登录http:
+loginName
+password
+res:
+{id:1,loginName:"aaa",nickname:"eric",avatarUrl:"http://111",remainPoint:10000,expPoint:200,level:2,title:"菜鸟",status:0,devCode:123,isVistor:0,sessionId:"abcdef"}
+
+游客登录http:
+devCode
+res:
+{id:2,nickname:"游客123",avatarUrl:"http://111",remainPoint:10000,expPoint:200,level:2,title:"菜鸟",status:0,devCode:123,isVistor:1,sessionId:"abcdef"}
+
+进入大厅，返回大厅及定时获取大厅房间列表http：
+sessionId
+type
+res：
+[
+	{type:1,number:1,name:"新房间",password:"123456",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:2,totalCount:6,isStarted:1},
+	{type:1,number:1,name:"新房间",password:"123456",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:2,totalCount:6,isStarted:1},
+	{type:1,number:1,name:"新房间",password:"123456",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:2,totalCount:6,isStarted:0}
+]
+
+搜索房间：不走服务器
+
+创建房间http：
+sessionId
+type
+roomName
+roomPassword
+res:
+{type:1,number:1,name:"新房间",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:1,totalCount:6}
+
+获取房间http：
+sessionId
+roomNumber
+roomPassword
+res:
+{type:1,number:1,name:"新房间",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:2,totalCount:6,round:3,pointList:[100,100,100],roomPoint:300,isStarted:1
+players:[
+{sessionId:"abcdef",position:1,nickname:"游客123",avatarUrl:"http://111",remainPoint:10000,playerPoint:100,alreadyLook:0,alreadyThrow:1,isWatching:0},
+{sessionId:"aaaaaa",position:2,nickname:"游客456",avatarUrl:"http://111",remainPoint:10000,playerPoint:200,alreadyLook:0,alreadyThrow:1,isWatching:0},
+{sessionId:"bbbbbb",position:3,nickname:"游客789",avatarUrl:"http://111",remainPoint:10000,playerPoint:300,alreadyLook:0,alreadyThrow:1,isWatching:0}
+]  ----所有玩家信息，1号位是庄家
+}
+
+===================================================socket=============================================
+心跳包：
+{op:"heartBeat"}
+{rop:"heartBeat"}
+
+进入房间，推送给房间其他人：
+{op:"enterRoom",roomNumber:1,password:"",sessionId:"abcdef"}
+{rop:"enterRoom",sessionId:"abcdef",position:1,nickname:"游客123",avatarUrl:"http://111",remainPoint:10000}  ----房间如果已开始，则观战至下局
+
+开始：庄家操作
+{op:"startGame",roomNumber:1,sessionId:"abcdef"}
+{rop:"startGame",position:1,sessionId:"abcdef",isStarted:1}  ----从庄家开始分配position，推送给特定玩家，房间状态改为已开始
+
+投注，加注，跟注，梭哈：
+{op:"putPoint",roomNumber:1,sessionId:"abcdef",point:100}  ----一开始投注额为basePoint
+{rop:"putPoint",pointList:[100,100,100],roomPoint:300,position:1,playerPoint:100,remainPoint:9900}
+
+发牌：所有人都投了锅底，由最后一位触发
+{op:"sendCard",roomNumber:1,sessionId:"abcdef"}
+{rop:"sendCard",position:1}
+
+开始倒计时：
+{op:"startCountDown",roomNumber:1,sessionId:"abcdef"}
+{rop:"startCountDown",position:1}   ---倒计时时间写在本地
+
+结束倒计时：
+{op:"endCountDown",roomNumber:1,sessionId:"abcdef"}
+{rop:"endCountDown",position:1,nextPosition:2,round:3}  ---流程终点，结束所有人的倒计时轮数+1
+
+看牌：
+{op:"lookCard",roomNumber:1,sessionId:"abcdef"}
+{rop:"lookCard",position:1,cards:[113,112,111]}  ----是否看牌的状态本地计算，看过牌后跟注X2，可在任意环节看牌，黑桃JQK
+
+放弃：
+{op:"throwCard",roomNumber:1,sessionId:"abcdef"}
+{rop:"throwCard",position:1} ---结束倒计时后如果没进行投注操作，则放弃
+
+比牌：
+{op:"pkCard",roomNumber:1,sessionId:"abcdef",toSessionId:"bbbbbb"} ---被比牌方
+{rop:"pkCard",fromPosition:1,toPosition:3,loser:3}  ----loser要放弃牌
+
+开牌：加注到最大值，轮数到最大值，最后只剩一家
+{op:"endGame",roomNumber:1,sessionId:"abcdef"}
+{rop:"endGame",position:1,remainPoint:10200,cards:[113,112,111],playerStatus:[{position:1,levelUp:1},{position:2,levelUp:0},{position:3,levelUp:0}],bankerPosition:3,isStarted:0} ----服务器端要结算经验值，换庄，房间状态改为未开始
+
+返回大厅，推送给房间其他人：
+{op:"enterLobby",roomNumber:1,sessionId:"abcdef"}
+res: 
+{rop:"enterLobby",position:1}
+
+失去心跳：注销socket和session
+
+
+用户-上下文映射
+房间-用户映射
+
+
