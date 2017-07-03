@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:lobbyView="views.lobbyView.*" skinClass="skins.Bg">
+	
+	<fx:Script>
+		<![CDATA[
+			import events.EnterRoomEvent;
+			
+			import model.ModelLocator;
+			
+			private var _instance:ModelLocator = ModelLocator.getInstance();
+			
+			protected function createRoomHandler(event:Event):void
+			{
+				var params:Object = {sessionId:_instance.user.sessionId,type:1,roomName:"创建房间",roomPassword:""};
+				
+				var result:Object =  {type:1,number:8,name:"新房间8",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:1,totalCount:6};
+				enterRoom(result);
+			}
+			
+			private function enterRoom(result:Object):void
+			{
+				_instance.room.type = result.type;
+				_instance.room.number = result.number;
+				_instance.room.name = result.name;
+				_instance.room.password = result.password;
+				_instance.room.basePoint = result.basePoint;
+				_instance.room.maxOrderLimit = result.maxOrderLimit;
+				_instance.room.maxRoundLimit = result.maxRountLimit;
+				_instance.room.count = result.count;
+				_instance.room.totalCount = result.totalCount;
+				_instance.gameBg.visible = true;
+			}
+			
+			protected function enterRoomHandler(event:EnterRoomEvent):void
+			{
+				var params:Object = {sessionId:_instance.user.sessionId,roomNumber:event.roomNumber,roomPassword:event.roomPassword};
+				
+				var result:Object = {type:1,number:event.roomNumber,name:"新房间",password:event.roomPassword,basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:2,totalCount:6,
+					enemy:[]
+				};
+				
+				enterRoom(result);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:VGroup>
+		<lobbyView:UserInfoPanel id="userInfoPanel"></lobbyView:UserInfoPanel>
+		<lobbyView:RoomListPanel id="roomListPanel" createRoom="createRoomHandler(event)" enterRoom="enterRoomHandler(event)"></lobbyView:RoomListPanel>
+	</s:VGroup>
+</s:SkinnableContainer>

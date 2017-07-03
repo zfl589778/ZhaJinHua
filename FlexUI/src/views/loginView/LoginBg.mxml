@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:loginView="views.loginView.*" skinClass="skins.Bg">
+	
+	<fx:Script>
+		<![CDATA[
+			import components.SocketUtil;
+			
+			import model.ModelLocator;
+			
+			private var _instance:ModelLocator = ModelLocator.getInstance();
+			
+			protected function loginHandler(event:Event):void
+			{
+				var param:Object = {loginName:loginPanel.loginNameTxt.text,password:loginPanel.passwordTxt.text};
+				 
+				var result:Object = {id:1,loginName:"aaa",nickname:"eric",avatarUrl:"http://111",remainPoint:10000,expPoint:200,level:2,title:"菜鸟",status:0,devCode:123,isVistor:0,sessionId:"abcdef"};
+				_instance.user.id = result.id;
+				_instance.user.loginName = result.loginName;
+				_instance.user.nickname = result.nickname;
+				_instance.user.avatarUrl = result.avatarUrl;
+				_instance.user.remainPoint = result.remainPoint;
+				_instance.user.expPoint = result.expPoint;
+				_instance.user.level = result.level;
+				_instance.user.title = result.title;
+				_instance.user.status = result.status;
+				_instance.user.devCode = result.devCode;
+				_instance.user.isVisitor = result.isVisitor;
+				_instance.user.sessionId = result.sessionId;
+				
+				_instance.typeBg.visible = true;
+				var obj:Object={op:"login",sessionId:"abcdefgh11"};
+				SocketUtil.sendCommand(obj);
+			}
+			
+			protected function showRegHandler(event:Event):void
+			{
+				regPanel.visible = true;
+			}
+			
+			protected function regHandler(event:Event):void
+			{
+				var obj:Object = {loginName:"aaa"};
+				loginPanel.loginNameTxt.text = obj.loginName;
+				regPanel.visible = false;	
+			}
+			
+			protected function showLoginHandler(event:Event):void
+			{
+				regPanel.visible = false;	
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<loginView:LoginPanel id="loginPanel" login="loginHandler(event)" showReg="showRegHandler(event)"></loginView:LoginPanel>
+	<loginView:RegPanel id="regPanel" visible="false" reg="regHandler(event)" showLogin="showLoginHandler(event)"></loginView:RegPanel>
+</s:SkinnableContainer>

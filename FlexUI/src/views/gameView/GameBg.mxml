@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx" skinClass="skins.Bg" xmlns:gameView="views.gameView.*">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			import model.ModelLocator;
+			import model.Room;
+			
+			private var _instance:ModelLocator = ModelLocator.getInstance();
+			
+			protected function returnLobby():void
+			{
+				var params:Object = {sessionId:_instance.user.sessionId,type:_instance.room.type};
+				
+				var result:Object =  [
+					{type:1,number:1,name:"新房间1",password:"123456",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:2,totalCount:6},
+					{type:1,number:2,name:"新房间2",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:3,totalCount:6},
+					{type:1,number:3,name:"新房间3",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:4,totalCount:6},
+					{type:1,number:4,name:"新房间4",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:5,totalCount:6},
+					{type:1,number:5,name:"新房间5",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:6,totalCount:6},
+					{type:1,number:6,name:"新房间6",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:2,totalCount:6},
+					{type:1,number:7,name:"新房间7",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:3,totalCount:6},
+				];
+				
+				_instance.rooms = new ArrayCollection();
+				var resultArray:Array = result as Array;
+				for(var i:int=0;i<resultArray.length;i++){
+					var obj:Object = resultArray[i];
+					var room:Room = new Room();
+					room.type = obj.type;
+					room.number = obj.number;
+					room.name = obj.name;
+					room.password = obj.password;
+					room.basePoint = obj.basePoint;
+					room.maxOrderLimit = obj.maxOrderLimit;
+					room.maxRoundLimit = obj.maxRoundLimit;
+					room.count = obj.count;
+					room.totalCount = obj.totalCount;
+					_instance.rooms.addItem(room);
+				}
+				
+				_instance.lobbyBg.roomListPanel.init(_instance.rooms);
+				_instance.gameBg.visible = false;
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:VGroup>
+		<s:HGroup>
+			<s:Button label="返回大厅" click="returnLobby()"></s:Button>
+			<gameView:UserInfoPanel id="userInfoPanel"></gameView:UserInfoPanel>
+		</s:HGroup>
+		<s:HGroup>
+			<!-- 对手 -->
+			<gameView:EnemyView></gameView:EnemyView>
+			<gameView:EnemyView></gameView:EnemyView>
+			<gameView:EnemyView></gameView:EnemyView>
+			<gameView:EnemyView></gameView:EnemyView>
+			<gameView:EnemyView></gameView:EnemyView>
+		</s:HGroup>
+		<!-- 台面 -->
+		<gameView:TableView></gameView:TableView>
+		<!-- 自己 -->
+		<gameView:SelfView></gameView:SelfView>
+	</s:VGroup>
+</s:SkinnableContainer>

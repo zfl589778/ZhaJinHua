@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:typeView="views.typeView.*" skinClass="skins.Bg">
+	
+	<fx:Script>
+		<![CDATA[
+			import model.ModelLocator;
+			
+			private var _instance:ModelLocator = ModelLocator.getInstance();
+			
+			protected function showRoomsHandler(event:Event):void
+			{
+				_instance.lobbyBg.roomListPanel.init(_instance.rooms);
+				_instance.lobbyBg.visible = true;
+			}
+			
+			protected function quickStartHandler(event:Event):void
+			{
+				
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:VGroup>
+		<typeView:UserInfoPanel id="userInfoPanel"></typeView:UserInfoPanel>
+		<typeView:GameTypePanel id="gameTypePanel" showRooms="showRoomsHandler(event)" quickStart="quickStartHandler(event)"></typeView:GameTypePanel>
+	</s:VGroup>
+</s:SkinnableContainer>

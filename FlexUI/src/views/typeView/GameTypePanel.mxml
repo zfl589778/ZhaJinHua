@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx" >
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			import model.ModelLocator;
+			import model.Room;
+			
+			private var _instance:ModelLocator = ModelLocator.getInstance();
+			
+			private function quickStartHandler():void
+			{
+				dispatchEvent(new Event("quickStart"));
+			}
+			
+			private function getRoomsHandler(type:int):void
+			{
+				var params:Object = {sessionId:_instance.user.sessionId,type:type};
+				
+				var result:Object =  [
+					{type:1,number:1,name:"新房间1",password:"123456",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:2,totalCount:6},
+					{type:1,number:2,name:"新房间2",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:3,totalCount:6},
+					{type:1,number:3,name:"新房间3",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:4,totalCount:6},
+					{type:1,number:4,name:"新房间4",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:5,totalCount:6},
+					{type:1,number:5,name:"新房间5",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:6,totalCount:6},
+					{type:1,number:6,name:"新房间6",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:2,totalCount:6},
+					{type:1,number:7,name:"新房间7",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:3,totalCount:6},
+				];
+				
+				_instance.rooms = new ArrayCollection();
+				var resultArray:Array = result as Array;
+				for(var i:int=0;i<resultArray.length;i++){
+					var obj:Object = resultArray[i];
+					var room:Room = new Room();
+					room.type = obj.type;
+					room.number = obj.number;
+					room.name = obj.name;
+					room.password = obj.password;
+					room.basePoint = obj.basePoint;
+					room.maxOrderLimit = obj.maxOrderLimit;
+					room.maxRoundLimit = obj.maxRoundLimit;
+					room.count = obj.count;
+					room.totalCount = obj.totalCount;
+					_instance.rooms.addItem(room);
+				}
+				
+				dispatchEvent(new Event("showRooms"));
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Metadata>
+		[Event(name="showRooms", type="flash.events.Event")]
+		[Event(name="quickStart", type="flash.events.Event")]
+	</fx:Metadata>
+	
+	<s:VGroup>
+		<s:Button label="快速开始" click="quickStartHandler()"></s:Button>
+		<s:Button label="普通模式" click="getRoomsHandler(1)"></s:Button>
+		<s:Button label="游戏1" click="getRoomsHandler(2)"></s:Button>
+		<s:Button label="游戏2" click="getRoomsHandler(3)"></s:Button>
+	</s:VGroup>
+</s:SkinnableContainer>

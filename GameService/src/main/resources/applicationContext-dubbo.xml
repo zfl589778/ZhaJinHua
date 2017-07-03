@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+ 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ 	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd"
+	default-lazy-init="false" >
+    <!-- 提供方应用名称信息，这个相当于起一个名字，我们dubbo管理页面比较清晰是哪个应用暴露出来的 -->
+	<dubbo:application name="${dubboApplication}" />
+	<!-- 服务提供超时时间 -->
+	<dubbo:provider timeout="5000" />
+	<!--注册到注册中心 -->
+	<dubbo:registry protocol="zookeeper" address="${dubboRegistry}" />
+	<!-- 用dubbo协议在20885端口暴露服务 -->
+	<dubbo:protocol name="dubbo" port="${dubboProtocol}" />
+	
+    <dubbo:service interface="com.eric.inter.ILoginService" ref="loginServiceImpl" />
+    
+</beans>

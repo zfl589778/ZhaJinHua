@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   minWidth="800" minHeight="600"  showStatusBar="false"
+					   creationComplete="initHandler()"
+					   xmlns:loginView="views.loginView.*" 
+					   xmlns:typeView="views.typeView.*" 
+					   xmlns:lobbyView="views.lobbyView.*" 
+					   xmlns:gameView="views.gameView.*">
+	<fx:Script>
+		<![CDATA[
+			import components.SocketUtil;
+			
+			import model.ModelLocator;
+			
+			private var _instance:ModelLocator = ModelLocator.getInstance();
+			
+			// 初始化连接 
+			public function conn():void 
+			{ 
+				SocketUtil.connect('127.0.0.1',8888,socketDataHandler,connectHandler,closeHandler);
+			} 
+			
+			// 监听关闭事件 
+			private function closeHandler(event:Event):void 
+			{ 
+				trace("closeHandler: " + event); 
+			} 
+			
+			// 监听连接成功事件 
+			private function connectHandler(event:Event):void 
+			{ 
+				SocketUtil.sendCommand({op:"heartBeat"});
+			} 
+			
+			// 处理接收消息 
+			private function socketDataHandler(event:ProgressEvent):void 
+			{ 
+				var result:Object = SocketUtil.readCommand();
+				if(result!=null){
+					
+				}
+			} 
+			
+			protected function initHandler():void
+			{
+				_instance.loginBg = loginBg;
+				_instance.typeBg = typeBg;
+				_instance.lobbyBg = lobbyBg;
+				_instance.gameBg = gameBg;
+				
+				conn();
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<loginView:LoginBg id="loginBg"></loginView:LoginBg>
+	<typeView:TypeBg id="typeBg" visible="false"></typeView:TypeBg>
+	<lobbyView:LobbyBg id="lobbyBg" visible="false"></lobbyView:LobbyBg>
+	<gameView:GameBg id="gameBg" visible="false"></gameView:GameBg>
+</s:WindowedApplication>

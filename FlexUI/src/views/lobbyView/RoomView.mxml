@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx">
+	<fx:Script>
+		<![CDATA[
+			import events.EnterRoomEvent;
+			
+			import model.Room;
+			[Bindable]
+			private var _room:Room;
+			
+			public function init(room:Room):void{
+				_room = room;
+			}
+			
+			protected function enterRoom():void
+			{
+				var pass:String = _room.password;
+				
+				dispatchEvent(new EnterRoomEvent("enterRoom",_room.number,pass));
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Metadata>
+		[Event(name="enterRoom", type="events.EnterRoomEvent")]
+	</fx:Metadata>
+	<s:VGroup>
+		<s:Label text="{_room.number}:{_room.name}"></s:Label>
+		<s:Button label="enter" click="enterRoom()"></s:Button>
+		<s:Label text="{_room.password==''?'':'加密'}"></s:Label>
+		<s:Label text="底注：{_room.basePoint}，单注上限：{_room.maxOrderLimit}"></s:Label>
+		<s:Label text="{_room.count}/{_room.totalCount}"></s:Label>
+	</s:VGroup>
+</s:SkinnableContainer>

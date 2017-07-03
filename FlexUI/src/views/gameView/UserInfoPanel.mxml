@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx">
+	<fx:Script>
+		<![CDATA[
+			import model.ModelLocator;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:HGroup>
+		<s:Label text="用户：{ModelLocator.getInstance().user.nickname}"></s:Label>
+		<s:Label text="等级：{ModelLocator.getInstance().user.level}"></s:Label>
+		<s:Label text="余额：{ModelLocator.getInstance().user.remainPoint}"></s:Label>
+		<s:Label text="房间号：{ModelLocator.getInstance().room.number}"></s:Label>
+		<s:Label text="房间名称：{ModelLocator.getInstance().room.name}"></s:Label>
+		<s:Label text="底注：{ModelLocator.getInstance().room.basePoint}"></s:Label>
+		<s:Label text="单注上限：{ModelLocator.getInstance().room.maxOrderLimit}"></s:Label>
+	</s:HGroup>
+</s:SkinnableContainer>

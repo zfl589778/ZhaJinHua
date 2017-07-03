@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" >
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			import model.Room;
+			
+			public function init(rooms:ArrayCollection):void{
+				var vg:VGroup = new VGroup();
+				var hg:HGroup = null;
+				for(var i:int=0;i<rooms.length;i++){
+					var room:Room = rooms.getItemAt(i) as Room;
+					if(i%3==0){
+						hg = new HGroup();
+						vg.addElement(hg);
+					}
+					var roomView:RoomView = new RoomView();
+					roomView.init(room);
+					hg.addElement(roomView);
+				}
+				container.addElement(vg);
+			}
+			
+			private function getRoomsLevel1():void
+			{
+				
+			}
+			
+			private function getRoomsLevel2():void
+			{
+				
+			}
+			
+			private function getRoomsLevel3():void
+			{
+				
+			}
+			
+			private function createRoomHandler():void
+			{
+				dispatchEvent(new Event("createRoom"));
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Metadata>
+		[Event(name="createRoom", type="flash.events.Event")]
+		[Event(name="enterRoom", type="events.EnterRoomEvent")]
+	</fx:Metadata>
+	<s:VGroup>
+		<s:HGroup>
+			<s:Button id="level1Btn" label="初级场" click="getRoomsLevel1()"></s:Button>
+			<s:Button id="level2Btn" label="中级场" click="getRoomsLevel2()"></s:Button>
+			<s:Button id="level3Btn" label="高级场" click="getRoomsLevel3()"></s:Button>
+		</s:HGroup>
+		<s:Group id="container"></s:Group>
+		<s:Button label="创建房间" click="createRoomHandler()"></s:Button>
+	</s:VGroup>
+</s:SkinnableContainer>

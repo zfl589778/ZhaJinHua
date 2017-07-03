@@ -1,0 +1,18 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:redis="http://scheme.systoon.com/schema/redis"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+http://scheme.systoon.com/schema/redis http://scheme.systoon.com/schema/redis.xsd">
+
+	<!-- 使用redisHelper -->
+	<bean id="redisCacheHelper" class="com.eric.service.cache.RedisCacheHelper" />
+	<bean id="redisStrategy" class="com.systoon.commons.cache.redis.ShardingStrategyFactoryImpl"/>
+	<bean id="redisClientPoolFactory" class="com.systoon.commons.cache.redis.RedisClientPoolFactory"/>
+	<bean id="redisPoolTemplate" class="com.systoon.commons.cache.redis.RedisPoolTemplate">
+		<property name="redisClientPoolFactory" ref="redisClientPoolFactory"/>
+	</bean>
+
+	<redis:config>
+		<redis:hash-node host="${redisHost1}" port="${redisPort1}" weight="1"/>
+	</redis:config>
+	
+</beans>

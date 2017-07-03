@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="User">
+
+	<select id="getUserList" resultType="User" parameterType="map">
+		SELECT
+			t.id as id,
+			t.login_name as loginName,
+			t.password as password,
+			t.nickname as nickname,
+			t.avatar_url as avatarUrl,
+			t.remain_point as remainPoint,
+			t.exp_point as expPoint,
+			t.level as level,
+			t.title as title,
+			t.status as status,
+			t.dev_code as devCode,
+			t.is_visitor as isVisitor
+		FROM
+			t_user t
+		<where>
+			<if test="id!=null">t.id = #{id}</if>
+			<if test="loginName!=null and loginName!=''">and t.login_name=#{loginName}</if>
+			<if test="password!=null and password!=''">and t.password=#{password}</if>
+			<if test="status!=null">and t.status=#{status}</if>
+			<if test="devCode!=null and devCode!=''">and t.dev_code=#{devCode}</if>
+			<if test="isVisitor!=null">and t.is_visitor=#{isVisitor}</if>
+		</where>
+	</select>
+	
+	<insert id="insertUser" useGeneratedKeys="true" keyProperty="id" parameterType="User">
+		INSERT INTO t_user(login_name,password,nickname,avatar_url,remain_point,exp_point,level,title,status,dev_code,is_visitor) 
+		VALUES(#{loginName},#{password},#{nickname},#{avatarUrl},#{remainPoint},#{expPoint},#{level},#{title},#{status},#{devCode},#{isVisitor})
+	</insert>
+	
+	<update id="updateUser" parameterType="User">
+		UPDATE t_user t
+		<set>
+			<if test="loginName!=null and loginName!=''">t.login_name=#{loginName},</if>
+			<if test="password!=null and password!=''">t.password=#{password},</if>
+			<if test="nickname!=null and nickname!=''">t.nickname=#{nickname},</if>
+			<if test="avatarUrl!=null and avatarUrl!=''">t.avatar_url=#{avatarUrl},</if>
+			<if test="remainPoint!=null">t.remain_point=#{remainPoint},</if>
+			<if test="expPoint!=null">t.exp_point=#{expPoint},</if>
+			<if test="level!=null">t.level=#{level},</if>
+			<if test="title!=null and title!=''">t.title=#{title},</if>
+			<if test="status!=null">t.status=#{status},</if>
+			<if test="devCode!=null and devCode!=''">t.dev_code=#{devCode},</if>
+			<if test="isVisitor!=null">t.is_visitor=#{isVisitor},</if>
+		</set>
+		where t.id=#{id}
+	</update>
+	
+	<delete id="deleteUser" parameterType="int">
+		delete from t_user where id=#{id} 
+	</delete>
+	
+</mapper>

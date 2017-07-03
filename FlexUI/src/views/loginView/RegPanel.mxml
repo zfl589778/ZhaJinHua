@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SkinnableContainer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					  xmlns:s="library://ns.adobe.com/flex/spark" 
+					  xmlns:mx="library://ns.adobe.com/flex/mx">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.http.HTTPService;
+			
+			import components.HTTPServiceUtil;
+			private function regDispatcher():void
+			{
+//				var service:HTTPService = new HTTPService();
+//				var url:String = "http://localhost:8088/core/core/reg";
+//				var params:Object = {loginName:loginNameRegTxt.text,password:passwordRegTxt.text,nickname:nicknameRegTxt.text,avatarUrl:"",devCode:"Windows"};
+//				service.url = url;
+//				service.send(params);
+//				service.addEventListener(ResultEvent.RESULT,regSuccessHandler);
+//				HTTPServiceUtil.send(url,params,function(event:ResultEvent){
+//					
+//				},null);
+				dispatchEvent(new Event("reg"));
+			}
+			
+			private function showLoginDispatcher():void
+			{
+				dispatchEvent(new Event("showLogin"));
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Metadata>
+		[Event(name="reg", type="flash.events.Event")]
+		[Event(name="showLogin", type="flash.events.Event")]
+	</fx:Metadata>
+	<s:VGroup>
+		<s:HGroup>
+			<s:Label text="用户名"></s:Label><s:TextInput id="loginNameRegTxt"></s:TextInput>
+		</s:HGroup>
+		<s:HGroup>
+			<s:Label text="密码"></s:Label><s:TextInput id="passwordRegTxt" displayAsPassword="true"></s:TextInput>
+		</s:HGroup>
+		<s:HGroup>
+			<s:Label text="确认密码"></s:Label><s:TextInput displayAsPassword="true"></s:TextInput>
+		</s:HGroup>
+		<s:HGroup>
+			<s:Label text="昵称"></s:Label><s:TextInput id="nicknameRegTxt"></s:TextInput>
+		</s:HGroup>
+		<s:HGroup>
+			<s:Button label="确定" click="regDispatcher()"></s:Button><s:Button label="返回登录" click="showLoginDispatcher()"></s:Button>
+		</s:HGroup>
+	</s:VGroup>
+</s:SkinnableContainer>

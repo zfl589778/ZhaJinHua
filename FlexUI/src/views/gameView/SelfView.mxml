@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:VGroup>
+		<s:HGroup>
+			<s:Button label="加注"></s:Button>
+			<s:Button label="跟注"></s:Button>
+			<s:Button label="看牌"></s:Button>
+			<s:Button label="比牌" enabled="false"></s:Button>
+			<s:Button label="梭哈" enabled="false"></s:Button>
+			<s:Button label="放弃"></s:Button>
+		</s:HGroup>
+		<s:HGroup>
+			<s:Label text="头像。。"></s:Label>
+			<s:HGroup>
+				<s:Label text="牌"></s:Label>
+				<s:Label text="牌"></s:Label>
+				<s:Label text="牌"></s:Label>
+			</s:HGroup>
+		</s:HGroup>
+	</s:VGroup>
+</s:Group>
