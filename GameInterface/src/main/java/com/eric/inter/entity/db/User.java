@@ -2,6 +2,9 @@ package com.eric.inter.entity.db;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
+
+import com.eric.components.ReadProperties;
 
 public class User implements Serializable{
 
@@ -28,6 +31,24 @@ public class User implements Serializable{
 	private Integer status;		//状态：0：正常，1：锁定
 	private String devCode;		//设备码，仅支持移动设备
 	private Integer isVisitor;	//是否为游客，0：否，1：是，如果为游客以设备码作为唯一标识
+	
+	public User(String loginName,String password,String nickname,Integer gender,String devCode,Integer isVisitor){
+		this.setLoginName(loginName);
+		this.setPassword(password);
+		this.setNickname(nickname);
+		this.setGender(gender);
+		this.setDevCode(devCode);
+		this.setIsVisitor(isVisitor);
+		this.setRemainPoint(0l);
+		this.setRemainCash(0l);
+		this.setLevel(1);
+		this.setExp(0);
+		this.setLevelupExp(Integer.parseInt(ReadProperties.bundle.getString("exp.every.level")));
+		this.setTotalGameCount(0);
+		this.setWinGameCount(0);
+		this.setStatus(0);
+	}
+	
 	public Integer getId() {
 		return id;
 	}

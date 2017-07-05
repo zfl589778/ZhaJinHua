@@ -23,22 +23,10 @@ public class LoginServiceImpl implements ILoginService {
 	private RedisCacheHelper redisCacheHelper;
 
 	@Override
-	public CommonResult<Boolean> regist(String loginName, String password,
-			String nickname, String avatarUrl, String devCode) {
-		User u = new User();
-		u.setLoginName(loginName);
-		u.setPassword(MD5Utils.MD5(password));
-		u.setNickname(nickname);
-		u.setHeadImage(avatarUrl);
-		u.setRemainPoint(0l);
-		u.setExp(0);
-		u.setLevel(1);
-		u.setTitle("");
-		u.setStatus(0);
-		u.setDevCode(devCode);
-		u.setIsVisitor(0);
-		MybatisDaoInstance.getInstance(User.class).insert("insertUser", u);
-		return CommonResult.returnSuccess(true);
+	public CommonResult<String> regist(String loginName, String password,String nickname,Integer gender, String devCode) {
+		User u = new User(loginName,password,nickname,gender,devCode,0);
+		MybatisDaoInstance.getInstance(User.class).insert(u);
+		return CommonResult.returnSuccess(loginName);
 	}
 
 	@Override
@@ -68,18 +56,6 @@ public class LoginServiceImpl implements ILoginService {
 
 	@Override
 	public CommonResult<User> loginVisitor(String devCode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommonResult<Boolean> forgotPassword() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CommonResult<User> visitorToUser() {
 		// TODO Auto-generated method stub
 		return null;
 	}

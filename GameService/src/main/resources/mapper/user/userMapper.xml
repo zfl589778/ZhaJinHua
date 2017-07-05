@@ -3,6 +3,17 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="User">
 
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="User">
+		INSERT INTO t_user
+		(session_id,login_name,password,nickname,head_image,remain_point,remain_cash,
+		level,title,exp,levelup_exp,gender,birthday,province,city,total_game_count,win_game_count,
+		comment,status,dev_code,is_visitor) 
+		VALUES
+		(#{sessionId},#{loginName},#{password},#{nickname},#{headImage},#{remainPoint},#{remainCash},
+		#{level},#{title},#{exp},#{levelupExp},#{gender},#{birthday},#{province},#{city},#{totalGameCount},#{winGameCount},
+		#{comment},#{status},#{devCode},#{isVisitor})
+	</insert>
+
 	<select id="getUserList" resultType="User" parameterType="map">
 		SELECT
 			t.id as id,
@@ -28,11 +39,6 @@
 			<if test="isVisitor!=null">and t.is_visitor=#{isVisitor}</if>
 		</where>
 	</select>
-	
-	<insert id="insertUser" useGeneratedKeys="true" keyProperty="id" parameterType="User">
-		INSERT INTO t_user(login_name,password,nickname,avatar_url,remain_point,exp_point,level,title,status,dev_code,is_visitor) 
-		VALUES(#{loginName},#{password},#{nickname},#{avatarUrl},#{remainPoint},#{expPoint},#{level},#{title},#{status},#{devCode},#{isVisitor})
-	</insert>
 	
 	<update id="updateUser" parameterType="User">
 		UPDATE t_user t

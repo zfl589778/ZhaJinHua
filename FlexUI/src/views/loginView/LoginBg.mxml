@@ -5,7 +5,13 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import mx.controls.Alert;
+			import mx.rpc.events.ResultEvent;
+			
+			import components.HTTPServiceUtil;
 			import components.SocketUtil;
+			
+			import events.RegEvent;
 			
 			import model.ModelLocator;
 			
@@ -31,23 +37,36 @@
 				
 				_instance.typeBg.visible = true;
 				var obj:Object={op:"login",sessionId:"abcdefgh11"};
-				SocketUtil.sendCommand(obj);
+//				SocketUtil.sendCommand(obj);
 			}
 			
 			protected function showRegHandler(event:Event):void
 			{
+				loginPanel.visible = false;
 				regPanel.visible = true;
 			}
 			
-			protected function regHandler(event:Event):void
+			protected function regHandler(event:RegEvent):void
 			{
-				var obj:Object = {loginName:"aaa"};
-				loginPanel.loginNameTxt.text = obj.loginName;
-				regPanel.visible = false;	
+				HTTPServiceUtil.send(HTTPServiceUtil.URL+"/portal/reg",
+					{loginName:event.loginName,password:event.password,nickname:event.nickname,gender:event.gender,devCode:event.devCode},
+					function(event:ResultEvent):void{
+						var result:Object = JSON.parse(String(event.result));
+						var isSuccess:Boolean = result.isSuccess;
+						if(isSuccess){
+							loginPanel.loginNameTxt.text = result.data.loginName;
+							loginPanel.visible = true;
+							regPanel.visible = false;	
+						}else{
+							Alert.show(result.msg);
+						}
+					}
+				);
 			}
 			
 			protected function showLoginHandler(event:Event):void
 			{
+				loginPanel.visible = true;
 				regPanel.visible = false;	
 			}
 			

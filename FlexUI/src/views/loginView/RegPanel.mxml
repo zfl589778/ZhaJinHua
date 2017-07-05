@@ -5,10 +5,7 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import mx.rpc.events.ResultEvent;
-			import mx.rpc.http.HTTPService;
-			
-			import components.HTTPServiceUtil;
+			import events.RegEvent;
 			private function regDispatcher():void
 			{
 //				var service:HTTPService = new HTTPService();
@@ -20,7 +17,7 @@
 //				HTTPServiceUtil.send(url,params,function(event:ResultEvent){
 //					
 //				},null);
-				dispatchEvent(new Event("reg"));
+				dispatchEvent(new RegEvent("reg",loginNameRegTxt.text,passwordRegTxt.text,nicknameRegTxt.text,int(genderGroup.selectedValue),Capabilities.os));
 			}
 			
 			private function showLoginDispatcher():void
@@ -33,9 +30,10 @@
 	
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<s:RadioButtonGroup id="genderGroup"></s:RadioButtonGroup>
 	</fx:Declarations>
 	<fx:Metadata>
-		[Event(name="reg", type="flash.events.Event")]
+		[Event(name="reg", type="events.RegEvent")]
 		[Event(name="showLogin", type="flash.events.Event")]
 	</fx:Metadata>
 	<s:VGroup>
@@ -50,6 +48,10 @@
 		</s:HGroup>
 		<s:HGroup>
 			<s:Label text="昵称"></s:Label><s:TextInput id="nicknameRegTxt"></s:TextInput>
+		</s:HGroup>
+		<s:HGroup>
+			<s:Label text="性别"></s:Label>
+			<s:RadioButton label="男" value="0" group="{genderGroup}"></s:RadioButton><s:RadioButton label="女" value="1" group="{genderGroup}"></s:RadioButton>
 		</s:HGroup>
 		<s:HGroup>
 			<s:Button label="确定" click="regDispatcher()"></s:Button><s:Button label="返回登录" click="showLoginDispatcher()"></s:Button>

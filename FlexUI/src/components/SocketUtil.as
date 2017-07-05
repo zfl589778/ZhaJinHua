@@ -6,9 +6,12 @@ package components
 
 	public class SocketUtil
 	{
+		public static const HOST:String = "127.0.0.1";
+		public static const PORT:int = 8888;
+		
 		private static var _socket:Socket = new Socket();
 		
-		public static function connect(host:String,port:int,dataCall:Function=null,connectCall:Function=null,closeCall:Function=null):void{
+		public static function connect(host:String=HOST,port:int=PORT,dataCall:Function=null,connectCall:Function=null,closeCall:Function=null):void{
 			if(!_socket.connected){
 				_socket.addEventListener(Event.CLOSE,closeCall); 
 				_socket.addEventListener(Event.CONNECT,connectCall); 

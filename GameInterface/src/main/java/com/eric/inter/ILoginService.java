@@ -5,7 +5,7 @@ import com.eric.inter.entity.db.User;
 
 public interface ILoginService {
 
-	CommonResult<Boolean> regist(String loginName,String password,String nickname,String avatarUrl,String devCode);
+	CommonResult<String> regist(String loginName, String password,String nickname,Integer gender, String devCode);
 	
 	CommonResult<User> loginNormal(String loginName,String password);
 	
@@ -13,8 +13,4 @@ public interface ILoginService {
 	
 	CommonResult<User> loginVisitor(String devCode);
 	
-	CommonResult<Boolean> forgotPassword();
-	
-	CommonResult<User> visitorToUser();
-
 }

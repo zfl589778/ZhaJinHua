@@ -19,7 +19,7 @@
 			// 初始化连接 
 			public function conn():void 
 			{ 
-				SocketUtil.connect('127.0.0.1',8888,socketDataHandler,connectHandler,closeHandler);
+				SocketUtil.connect(SocketUtil.HOST,SocketUtil.PORT,socketDataHandler,connectHandler,closeHandler);
 			} 
 			
 			// 监听关闭事件 
@@ -50,7 +50,7 @@
 				_instance.lobbyBg = lobbyBg;
 				_instance.gameBg = gameBg;
 				
-				conn();
+//				conn();
 			}
 			
 		]]>

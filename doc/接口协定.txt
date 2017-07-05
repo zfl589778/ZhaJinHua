@@ -2,6 +2,7 @@
 loginName
 password
 nickname
+gender
 devCode
 res:
 {loginName:"aaa"}
