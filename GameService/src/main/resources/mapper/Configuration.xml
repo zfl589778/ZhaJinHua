@@ -4,6 +4,6 @@
 
 <configuration>
 	<typeAliases>
-		<typeAlias alias="User" type="com.eric.inter.entity.User" />
+		<typeAlias alias="User" type="com.eric.inter.entity.db.User" />
 	</typeAliases>
 </configuration>
