@@ -43,11 +43,11 @@ roomNumber
 roomPassword
 res:
 {type:1,number:1,name:"新房间",password:"",basePoint:100,maxOrderLimit:10000,maxRoundLimit:10,count:2,totalCount:6,round:3,pointList:[100,100,100],roomPoint:300,isStarted:1
-players:[
-{sessionId:"abcdef",position:1,nickname:"游客123",avatarUrl:"http://111",remainPoint:10000,playerPoint:100,alreadyLook:0,alreadyThrow:1,isWatching:0},
-{sessionId:"aaaaaa",position:2,nickname:"游客456",avatarUrl:"http://111",remainPoint:10000,playerPoint:200,alreadyLook:0,alreadyThrow:1,isWatching:0},
-{sessionId:"bbbbbb",position:3,nickname:"游客789",avatarUrl:"http://111",remainPoint:10000,playerPoint:300,alreadyLook:0,alreadyThrow:1,isWatching:0}
-]  ----所有玩家信息，1号位是庄家
+	players:[
+		{sessionId:"abcdef",position:1,nickname:"游客123",avatarUrl:"http://111",remainPoint:10000,playerPoint:100,alreadyLook:0,alreadyThrow:1,isWatching:0},
+		{sessionId:"aaaaaa",position:2,nickname:"游客456",avatarUrl:"http://111",remainPoint:10000,playerPoint:200,alreadyLook:0,alreadyThrow:1,isWatching:0},
+		{sessionId:"bbbbbb",position:3,nickname:"游客789",avatarUrl:"http://111",remainPoint:10000,playerPoint:300,alreadyLook:0,alreadyThrow:1,isWatching:0}
+	]  ----所有玩家信息，1号位是庄家
 }
 
 ===================================================socket=============================================
@@ -81,7 +81,7 @@ players:[
 
 看牌：
 {op:"lookCard",roomNumber:1,sessionId:"abcdef"}
-{rop:"lookCard",position:1,cards:[113,112,111]}  ----是否看牌的状态本地计算，看过牌后跟注X2，可在任意环节看牌，黑桃JQK
+{rop:"lookCard",position:1,cards:[113,112,111]}  ----是否看牌的状态本地计算，看过牌后跟注X2，可在任意环节看牌，黑桃JQK，牌从服务器端获取
 
 放弃：
 {op:"throwCard",roomNumber:1,sessionId:"abcdef"}
@@ -93,7 +93,7 @@ players:[
 
 开牌：加注到最大值，轮数到最大值，最后只剩一家
 {op:"endGame",roomNumber:1,sessionId:"abcdef"}
-{rop:"endGame",position:1,remainPoint:10200,cards:[113,112,111],playerStatus:[{position:1,levelUp:1},{position:2,levelUp:0},{position:3,levelUp:0}],bankerPosition:3,isStarted:0} ----服务器端要结算经验值，换庄，房间状态改为未开始
+{rop:"endGame",position:1,remainPoint:10200,cards:[113,112,111],playerStatus:[{position:1,levelUp:1},{position:2,levelUp:0},{position:3,levelUp:0}],bankerPosition:3,isStarted:0} ----服务器端要结算经验值，换庄，房间状态改为未开始，牌从服务器端获取
 
 返回大厅，推送给房间其他人：
 {op:"enterLobby",roomNumber:1,sessionId:"abcdef"}
