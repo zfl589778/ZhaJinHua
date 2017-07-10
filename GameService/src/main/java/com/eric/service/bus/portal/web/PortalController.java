@@ -22,9 +22,7 @@ public class PortalController extends AbsController{
 	@NotNeedLogin
 	@ResponseBody
 	public CommonResult<String> regist(String loginName,String password,String nickname,String gender,String devCode){
-		if(checkParamIsBlank(loginName,password,nickname,gender)){
-			return CommonResult.returnFail("参数不能为空！");
-		};
+		checkParamIsBlank(loginName,password,nickname,gender);
 		CommonResult<String> result = loginService.regist(loginName, password, nickname, Integer.parseInt(gender), devCode);
 		return result;
 	}
@@ -33,9 +31,7 @@ public class PortalController extends AbsController{
 	@NotNeedLogin
 	@ResponseBody
 	public CommonResult<User> loginNormal(String loginName,String password){
-		if(checkParamIsBlank(loginName,password)){
-			return CommonResult.returnFail("参数不能为空！");
-		};
+		checkParamIsBlank(loginName,password);
 		CommonResult<User> result = loginService.loginNormal(loginName, password);
 		return result;
 	}

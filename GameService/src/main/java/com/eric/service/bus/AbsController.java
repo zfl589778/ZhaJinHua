@@ -1,14 +1,15 @@
 package com.eric.service.bus;
 
+import com.eric.components.Exceptions;
+
 public class AbsController {
 
-	protected boolean checkParamIsBlank(Object...value) {
+	protected void checkParamIsBlank(Object...value) {
 		for (Object param : value) {
 			if(param==null||"".equals(param)){
-				return true;
+				Exceptions.throwException("参数不能为空！");
 			}
 		}
-		return false;
 	}
 	
 }
