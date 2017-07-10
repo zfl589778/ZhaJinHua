@@ -15,12 +15,6 @@ public class ExceptionHandler implements HandlerExceptionResolver {
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         logger.error("异常:" + ex.getMessage(), ex);
         return format2View(ex.getMessage());
-//        try {
-//			response.getWriter().write(JSONObject.toJSONString(CommonResult.returnFail(ex.getMessage())));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//        return null;
 	}
 	
 	private ModelAndView format2View(String msg){
