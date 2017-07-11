@@ -18,7 +18,7 @@
 			<properties>
 				<logLevel>DEBUG</logLevel>
 				<dubboApplication>GameServer</dubboApplication>
-				<dubboRegistry>192.168.2.34:2181</dubboRegistry>
+				<dubboRegistry>127.0.0.1:2181</dubboRegistry>
 				<dubboProtocol>20885</dubboProtocol>
 			</properties>
 		</profile>
