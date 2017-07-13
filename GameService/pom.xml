@@ -18,7 +18,7 @@
 			<properties>
 				<logLevel>DEBUG</logLevel>
 				<jdbcIp>127.0.0.1</jdbcIp>
-				<jdbcDatabase>coreDB</jdbcDatabase>
+				<jdbcDatabase>game</jdbcDatabase>
 				<jdbcUsername>dbadmin</jdbcUsername>
 				<jdbcPassword>dbadmin</jdbcPassword>
 				<redisHost1>127.0.0.1</redisHost1>
